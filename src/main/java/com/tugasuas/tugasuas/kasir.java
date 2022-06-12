@@ -5,11 +5,8 @@
 package com.tugasuas.tugasuas;
 
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,10 +14,7 @@ import javax.swing.JOptionPane;
  * @author Tribu
  */
 public class kasir extends javax.swing.JFrame {
-
-    /**
-     * Creates new form kasir
-     */
+    
     public kasir() {
         initComponents();
     }
@@ -303,7 +297,9 @@ public class kasir extends javax.swing.JFrame {
               txtDiscount.setText("0.1");
               double potongan = totalBayar * discount;
               double totalSemua = totalBayar - potongan;
+              String ubah = String.valueOf(potongan);
               String convert = String.valueOf(totalSemua);
+              txtPotongan.setText(ubah);
               txtTotalBayar.setText(convert);
                
                
@@ -333,35 +329,29 @@ public class kasir extends javax.swing.JFrame {
     private void btSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSimpanActionPerformed
                 String nama = txtnama.getText();
                 String HP = txtHP.getText(); 
-                String Item = txtharga.getText();
+                String Item = String.valueOf(cbItem.getSelectedItem());
                 String jumlah = txtjumlah.getText();
                 String total = txtTotal.getText();
                 String discount = txtDiscount.getText();
                 String Potongan = txtPotongan.getText();
                 String TotalBayar = txtTotalBayar.getText();
                 
-                try {
-                    
-                    FileWriter writer = new FileWriter ("coba.txt",true);
-                    
-                    
-                    writer.write("Nama : " + nama);
-                    writer.write(System.getProperty("Line.separator"));
-                    writer.write("HP " + HP);
-                    writer.write(System.getProperty("Line.separator"));
-                    writer.write("Item : " + Item);
-                    writer.write("Jumlah : " + jumlah);
-                    writer.write("Total : " + total);
-                    writer.write("Discount : " + discount);
-                    writer.write("Potongan : " + Potongan);
-                    writer.write("TotalBayar : " + TotalBayar);
-                    
-                    writer.close();
-                    
-                    JOptionPane.showMessageDialog(rootPane,"Succes\nData Tersimpan");
+                try { 
+                   BufferedWriter out;
+                   out = new BufferedWriter(new FileWriter("C:\\Users\\Tribu\\Documents//budi.txt"));
+                   out.write("Nama :" + nama + "\n");
+                   out.write("No.HP :" + HP + "\n");
+                   out.write("Jumlah :" + jumlah + "\n");
+                   out.write("Total : " + total + "\n");
+                   out.write("Discount : " +discount + "\n");
+                   out.write("Potongan : " + Potongan + "\n");
+                   out.write("Total Bayar :" + TotalBayar + "\n");
+                   
+                   JOptionPane.showMessageDialog(rootPane, "Berhasil Disimpan");
+                   out.close();
                 }
                 catch(IOException e){
-                    JOptionPane.showMessageDialog(rootPane, "Error");
+                    JOptionPane.showMessageDialog(rootPane, e.getMessage());
                 }
             
     }//GEN-LAST:event_btSimpanActionPerformed
@@ -406,10 +396,8 @@ public class kasir extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new kasir().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new kasir().setVisible(true);
         });
     }
 
